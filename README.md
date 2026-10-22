@@ -35,6 +35,8 @@ flowchart LR
 
 - [Funcionalidades](#funcionalidades)
 - [Instalação](#instalação)
+  - [Baixar o binário](#baixar-o-binário)
+  - [Compilar a partir do código](#compilar-a-partir-do-código)
 - [Uso](#uso)
   - [Mapa mental](#mapa-mental)
   - [Atalhos de teclado](#atalhos-de-teclado)
@@ -71,9 +73,29 @@ flowchart LR
 
 ## Instalação
 
-Não há binário distribuído na App Store: o app é compilado a partir do código.
-São necessários **macOS 14 (Sonoma) ou superior** e as **Command Line Tools do
-Xcode** (ou o Xcode 15+).
+Requisitos: **macOS 14 (Sonoma) ou superior** em Mac com **Apple Silicon**
+(arm64). O app não está na App Store.
+
+### Baixar o binário
+
+1. Baixe `KTaskList-<versão>-arm64.zip` na página de
+   [Releases](https://github.com/khoriati/KTaskList/releases/latest).
+2. Descompacte e mova `KTaskList.app` para `/Applications`.
+3. Na primeira abertura o Gatekeeper avisa que o app é de um desenvolvedor não
+   identificado (a assinatura é ad-hoc, sem certificado Apple). Clique com o
+   botão direito em `KTaskList.app` → **Abrir** → **Abrir**, ou remova a
+   quarentena no Terminal:
+
+   ```bash
+   xattr -dr com.apple.quarantine /Applications/KTaskList.app
+   ```
+
+Cada release traz o `.sha256` do zip; confira com `shasum -a 256 -c`.
+
+### Compilar a partir do código
+
+Necessita das **Command Line Tools do Xcode** (ou Xcode 15+). Em Macs Intel esta
+é a única opção.
 
 ```bash
 xcode-select --install                 # uma vez, se ainda não tiver as ferramentas
@@ -84,10 +106,7 @@ scripts/build-app.sh --install         # compila em release e copia para /Applic
 open /Applications/KTaskList.app
 ```
 
-O bundle recebe **assinatura ad-hoc**, suficiente para rodar no próprio Mac. Em
-outro Mac o Gatekeeper pode bloquear a primeira abertura; use o clique direito →
-**Abrir**, ou compile localmente. O app não aparece no Dock (`LSUIElement`):
-procure o ícone ☑ na barra de menu.
+O app não aparece no Dock (`LSUIElement`): procure o ícone ☑ na barra de menu.
 
 Para iniciar com o login, use o menu ⋯ → **Iniciar com o login** (usa
 `SMAppService`, sem itens de login manuais).
