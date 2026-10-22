@@ -35,7 +35,7 @@ final class ReminderScheduler: ObservableObject {
         }
 
         let timer = Timer(timeInterval: 20, repeats: true) { [weak self] _ in
-            Task { @MainActor in self?.check(.timer) }
+            Task { @MainActor [weak self] in self?.check(.timer) }
         }
         timer.tolerance = 5
         // Modo .common: continua disparando com menus abertos, arrasto ou painel modal.
@@ -50,7 +50,7 @@ final class ReminderScheduler: ObservableObject {
         ]
         for name in sessionEvents {
             observers.append(workspace.addObserver(forName: name, object: nil, queue: .main) { [weak self] _ in
-                Task { @MainActor in self?.check(.session) }
+                Task { @MainActor [weak self] in self?.check(.session) }
             })
         }
         // Notificação distribuída não documentada pela Apple, mas estável há anos; é a
@@ -58,7 +58,7 @@ final class ReminderScheduler: ObservableObject {
         observers.append(DistributedNotificationCenter.default().addObserver(
             forName: Notification.Name("com.apple.screenIsUnlocked"), object: nil, queue: .main
         ) { [weak self] _ in
-            Task { @MainActor in self?.check(.session) }
+            Task { @MainActor [weak self] in self?.check(.session) }
         })
 
         Task { @MainActor [weak self] in
