@@ -7,25 +7,28 @@ sem permissões especiais: os dados ficam em um JSON na sua pasta de usuário.
 
 Projeto open source de [Marcos Khoriati](https://khori.com.br), licença MIT.
 
-```
-┌ barra de menu ────────────────────────────────┐
-│ ☑ 7                                            │   7 itens pendentes
-└────────────────────────────────────────────────┘
-   │ clique
-   ▼
-┌ popover (ou janela destacada) ──────────────────────────────────────┐
-│ [Novo item raiz…                               ] (+)   ⋯            │
-│ (Pendentes 7) (Concluídas 3) (Atrasadas 1)      Mapa │ Lista        │
-│                                                                      │
-│  ┌ Projeto X ┐──┬──┌ Levantar requisitos ┐──┌ Entrevistar cliente ┐ │
-│  │ 📎2 ⏰    │  │  │ ✓                   │  └──────────────────────┘ │
-│  └───────────┘  └──┌ Prototipar tela    ┐                            │
-│                    │ atrasado há 2 d     │                            │
-│  ┌ Casa ─────┐──┬──└─────────────────────┘                            │
-│  └───────────┘  └──┌ Pagar contas ┐                                   │
-│                                                                      │
-│  1 atrasado(s)                                       −  100 %  +    │
-└──────────────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart LR
+    menu["Barra de menu<br/>☑ 7 pendentes"]
+    menu -- clique --> popover
+
+    subgraph popover["Popover (ou janela destacada)"]
+        direction TB
+        toolbar["Novo item raiz… (+) · ⋯<br/>Filtros: Pendentes 7 · Concluídas 3 · Atrasadas 1<br/>Visão: Mapa | Lista"]
+        toolbar --> mapa
+
+        subgraph mapa["Mapa mental"]
+            direction LR
+            px["Projeto X<br/>📎 2 · ⏰"] --> lr["Levantar requisitos ✓"] --> ec["Entrevistar cliente"]
+            px --> pt["Prototipar tela<br/>atrasado há 2 d"]
+            casa["Casa"] --> pc["Pagar contas"]
+        end
+
+        mapa --> rodape["1 atrasado(s) · zoom − 100 % +"]
+    end
+
+    style pt stroke:#d33,stroke-width:2px
+    style lr stroke-dasharray: 4 3,opacity:0.6
 ```
 
 ## Sumário
